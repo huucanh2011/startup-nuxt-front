@@ -1,12 +1,15 @@
 <template>
   <div
     class="
+      transition
+      duration-300
+      ease-in-out
       flex
       items-center
       group
       hover:bg-gray-500
       group
-      rounded
+      rounded-sm
       px-1
       py-2
       mb-1
@@ -34,13 +37,5 @@ export default {
       default: false,
     },
   },
-  // watch: {
-  //   $route: 'active',
-  // },
-  // methods: {
-  //   active() {
-  //     return this.$route.path === this.to ? true : false
-  //   },
-  // },
 }
 </script>

@@ -1,19 +1,12 @@
 <template>
-  <div>
-    <app-header />
-    <app-aside />
-    <div class="mt-16 pl-64">
-      <nuxt :key="$route.fullPath" />
-    </div>
-  </div>
+  <app-layout>
+    <nuxt :key="$route.fullPath" />
+  </app-layout>
 </template>
 
 <script>
-import AppHeader from '~/components/ui/AppHeader'
-import AppAside from '~/components/ui/AppAside'
+import AppLayout from '~/components/layouts/AppLayout'
 export default {
-  components: { AppHeader, AppAside },
+  components: { AppLayout },
 }
 </script>
-
-<style></style>

@@ -15,10 +15,7 @@
 </template>
 
 <script>
-import AppButton from './AppButton.vue'
-import AppInputSearch from './AppInputSearch.vue'
 export default {
-  components: { AppInputSearch, AppButton },
   methods: {
     onSearch(val) {
       this.$emit('onSearch', val)

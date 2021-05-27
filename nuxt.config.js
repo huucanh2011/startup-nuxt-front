@@ -1,7 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'startup-nuxt-front',
+    titleTemplate: '%s - Startup Luvina',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -10,11 +10,16 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
+  loading: {
+    color: '#111827',
+    height: '5px',
+  },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/global-components'],
+  plugins: ['~/plugins/global-components', '~/plugins/filters'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,

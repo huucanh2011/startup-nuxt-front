@@ -1,10 +1,8 @@
 <template>
   <button
     class="
-      h-9
       px-4
       border
-      text-sm
       rounded
       focus:outline-none
       group
@@ -12,10 +10,11 @@
       transition
       duration-300
     "
-    :class="buttonClasses"
-    @click="$emit('onClick')"
+    :class="[buttonClasses, sizeClasses]"
+    v-bind="$attrs"
+    v-on="$listeners"
   >
-    <div v-if="!loading" class="flex items-center">
+    <div v-if="!loading" class="flex items-center justify-center">
       <component
         :is="icon"
         v-if="icon"
@@ -31,7 +30,11 @@
 <script>
 export default {
   props: {
-    type: {
+    color: {
+      type: String,
+      default: '',
+    },
+    size: {
       type: String,
       default: '',
     },
@@ -51,7 +54,7 @@ export default {
   computed: {
     buttonClasses() {
       let classes
-      switch (this.type) {
+      switch (this.color) {
         case 'primary':
           classes =
             'bg-gray-900 text-gray-100 hover:bg-white hover:text-gray-900 hover:border-gray-900'
@@ -73,6 +76,22 @@ export default {
 
         default:
           classes = 'text-gray-900 group-hover:text-gray-100'
+          break
+      }
+      return classes
+    },
+    sizeClasses() {
+      let classes
+      switch (this.size) {
+        case 'sm':
+          classes = 'h-8'
+          break
+        case 'lg':
+          classes = 'h-12'
+          break
+
+        default:
+          classes = 'h-9'
           break
       }
       return classes

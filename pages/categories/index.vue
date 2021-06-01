@@ -40,15 +40,26 @@
       </tr>
     </app-table>
 
-    <app-pagination />
+    <app-pagination :meta="meta" @onChangePage="onChangePage" />
   </app-card>
 </template>
 
 <script>
 export default {
-  async asyncData({ $axios }) {
-    const { data } = await $axios.get('http://localhost:8080/api/v1/categories')
-    return { categories: data }
+  async asyncData({ $axios, route }) {
+    let url = '/categories'
+    if (route.query.q) {
+      url += `?q=${route.query.q}`
+    }
+    if (route.query.page) {
+      if (!route.query.q) {
+        url += `?page=${route.query.page}`
+      } else {
+        url += `&page=${route.query.page}`
+      }
+    }
+    const { data } = await $axios.get(url)
+    return { categories: data.data, meta: data.meta }
   },
   data() {
     return {
@@ -79,8 +90,16 @@ export default {
       title: 'Thể loại',
     }
   },
+  watchQuery: ['q', 'page', 'limit'],
   methods: {
-    onSearch(val) {},
+    onSearch(q) {
+      if (q) {
+        this.$router.push({ query: { q } })
+      }
+    },
+    onChangePage(page) {
+      this.$router.push({ query: { page } })
+    },
   },
 }
 </script>

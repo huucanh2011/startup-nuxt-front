@@ -12,14 +12,18 @@ export default {
 
   loading: {
     color: '#111827',
-    height: '5px',
+    height: '3px',
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/global-components', '~/plugins/filters'],
+  plugins: [
+    '~/plugins/global-components',
+    '~/plugins/axios',
+    '~/plugins/filters',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -38,12 +42,55 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    'cookie-universal-nuxt',
+    '@nuxtjs/toast',
   ],
 
+  toast: {
+    position: 'top-center',
+    duration: 3000,
+  },
+
+  router: {
+    middleware: ['auth'],
+  },
+
+  auth: {
+    localStorage: false,
+    cookie: {
+      options: {
+        expires: 7,
+      },
+    },
+    strategies: {
+      local: {
+        token: {
+          property: 'token',
+        },
+        user: {
+          property: 'user',
+        },
+        endpoints: {
+          login: { url: '/auth/login', method: 'post' },
+          user: { url: '/auth/me', method: 'get' },
+          logout: false,
+        },
+      },
+    },
+    redirect: {
+      login: '/login',
+      logout: '/login',
+      home: '/',
+    },
+  },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: 'http://localhost:8080/api/v1',
+  },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {

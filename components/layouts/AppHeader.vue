@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed top-0 w-full h-16">
+  <div class="fixed top-0 w-full h-16 z-50">
     <header
       class="
         h-16
@@ -30,7 +30,7 @@
           >
             <ul>
               <li>
-                <a href="#" class="flex items-center">
+                <a class="flex items-center cursor-pointer" @click="logout">
                   <outline-logout-icon class="h-5 w-5 mr-2" />
                   Đăng xuất
                 </a>
@@ -64,6 +64,10 @@ export default {
       if (!this.$refs.dropdown.contains(e.target)) {
         this.isShow = false
       }
+    },
+    async logout() {
+      await this.$auth.logout()
+      this.$toast.success('Đăng xuất.')
     },
   },
 }

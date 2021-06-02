@@ -1,5 +1,7 @@
 import Vue from 'vue'
 
+import { ValidationProvider, ValidationObserver } from 'vee-validate'
+
 import AppAlert from '~/components/ui/AppAlert'
 import AppButton from '~/components/ui/AppButton'
 import AppCard from '~/components/ui/AppCard'
@@ -16,6 +18,8 @@ const components = {
   AppInputSearch,
   AppTable,
   AppPagination,
+  ValidationProvider,
+  ValidationObserver,
 }
 
 Object.entries(components).forEach(([name, component]) => {

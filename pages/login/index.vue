@@ -13,27 +13,52 @@
     <div class="w-1/2 pr-10">
       <img src="~/assets/auth.png" alt="banner-left" />
     </div>
-    <form class="w-1/2 flex flex-col pl-10" @submit.prevent="login">
-      <div class="font-semibold uppercase text-center mb-5">Đăng nhập</div>
 
-      <app-alert :messages="serverErrors" />
+    <div class="w-1/2">
+      <validation-observer ref="form" v-slot="{ handleSubmit }">
+        <form class="flex flex-col pl-10" @submit.prevent="handleSubmit(login)">
+          <div class="font-semibold uppercase text-center mb-5">Đăng nhập</div>
 
-      <app-input v-model="user.email" label="Email" placeholder="Nhập email" />
-      <app-input
-        v-model="user.password"
-        label="Mật khẩu"
-        type="password"
-        placeholder="Nhập mật khẩu"
-      />
-      <app-button
-        class="mt-2"
-        type="submit"
-        color="primary"
-        size="lg"
-        @click="login"
-        >Đăng nhập</app-button
-      >
-    </form>
+          <app-alert :messages="serverErrors" />
+
+          <validation-provider
+            v-slot="{ errors }"
+            name="email"
+            rules="required|email"
+          >
+            <app-input
+              v-model="user.email"
+              type="email"
+              label="Email"
+              placeholder="Nhập email"
+            />
+            <span class="text-red-500">{{ errors[0] }}</span>
+          </validation-provider>
+
+          <validation-provider
+            v-slot="{ errors }"
+            name="mật khẩu"
+            rules="required|min:6"
+          >
+            <app-input
+              v-model="user.password"
+              type="password"
+              label="Mật khẩu"
+              placeholder="Nhập mật khẩu"
+            />
+            <span class="text-red-500">{{ errors[0] }}</span>
+          </validation-provider>
+          <app-button
+            class="mt-2"
+            type="submit"
+            color="primary"
+            size="lg"
+            @click="login"
+            >Đăng nhập</app-button
+          >
+        </form>
+      </validation-observer>
+    </div>
   </div>
 </template>
 
@@ -58,11 +83,14 @@ export default {
   methods: {
     async login() {
       try {
-        await this.$auth.loginWith('local', {
-          data: this.user,
-        })
-        this.$toast.success('Đăng nhập thành công.')
-        this.$router.push('/')
+        const isValid = await this.$refs.form.validate()
+        if (isValid) {
+          await this.$auth.loginWith('local', {
+            data: this.user,
+          })
+          this.$toast.success('Đăng nhập thành công.')
+          this.$router.push('/')
+        }
       } catch (error) {
         this.serverErrors = error.response.data.errors
       }

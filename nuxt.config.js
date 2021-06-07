@@ -24,6 +24,8 @@ export default {
     '~/plugins/vee-validate',
     '~/plugins/global-components',
     '~/plugins/filters',
+    '~/plugins/vuex-router-sync',
+    '~/plugins/query-param-sync',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -76,7 +78,7 @@ export default {
         },
         endpoints: {
           login: { url: '/auth/login', method: 'post' },
-          user: { url: '/auth/me', method: 'get' },
+          user: { url: '/auth/me', method: 'post' },
           logout: false,
         },
       },
@@ -90,7 +92,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'http://localhost:8080/api/v1',
+    baseURL: 'https://startup-spring-boot-api.herokuapp.com/api/v1',
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

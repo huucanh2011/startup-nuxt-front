@@ -3,9 +3,9 @@
     <div class="flex items-center justify-between mb-4">
       <app-input-search @onSearch="onSearch" />
       <app-button
-        type="primary"
+        color="primary"
         icon="outline-plus-circle-icon"
-        @onClick="onClick"
+        @click="onClick"
       >
         Thêm
       </app-button>
@@ -20,7 +20,9 @@ export default {
     onSearch(val) {
       this.$emit('onSearch', val)
     },
-    onClick() {},
+    onClick() {
+      this.$emit('openModal')
+    },
   },
 }
 </script>

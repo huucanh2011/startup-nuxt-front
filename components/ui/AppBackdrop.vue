@@ -1,0 +1,14 @@
+<template>
+  <div
+    class="
+      fixed
+      inset-0
+      h-full
+      bg-gray-500
+      opacity-50
+      z-40
+      transition
+      duration-300
+    "
+  ></div>
+</template>

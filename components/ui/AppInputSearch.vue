@@ -31,7 +31,7 @@
 export default {
   data() {
     return {
-      searchText: '',
+      searchText: this.$store.state.route.query.q,
     }
   },
   methods: {

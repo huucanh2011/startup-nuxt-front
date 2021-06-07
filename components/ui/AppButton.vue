@@ -56,26 +56,25 @@ export default {
       let classes
       switch (this.color) {
         case 'primary':
-          classes =
-            'bg-gray-900 text-gray-100 hover:bg-white hover:text-gray-900 hover:border-gray-900'
+          classes = 'bg-gray-900 border-gray-900 text-gray-100 hover:opacity-80'
           break
 
         default:
           classes =
-            'bg-white border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-gray-100'
+            'bg-white border-gray-500 text-gray-500 hover:border-gray-900 hover:text-gray-900'
           break
       }
       return classes
     },
     iconClasses() {
       let classes
-      switch (this.type) {
+      switch (this.color) {
         case 'primary':
-          classes = 'text-gray-100 group-hover:text-gray-900'
+          classes = 'text-gray-100'
           break
 
         default:
-          classes = 'text-gray-900 group-hover:text-gray-100'
+          classes = 'text-gray-500'
           break
       }
       return classes

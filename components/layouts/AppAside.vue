@@ -7,8 +7,10 @@
         alt="avatar"
       />
       <div class="flex flex-col">
-        <span class="text-gray-200">Nguyen Huu Canh</span>
-        <small class="text-xs text-gray-100 opacity-40">Admin</small>
+        <span class="text-gray-200">{{ $auth.user.name }}</span>
+        <small class="text-xs text-gray-100 lowercase opacity-40">
+          {{ $auth.user.role }}
+        </small>
       </div>
     </div>
     <aside-menu :menus="menus" />

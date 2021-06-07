@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed top-0 w-full h-16 z-50">
+  <div class="fixed top-0 w-full h-16 z-30">
     <header
       class="
         h-16
@@ -21,7 +21,7 @@
 
         <div ref="dropdown" class="relative">
           <div class="flex items-center cursor-pointer rounded" @click="toggle">
-            <span class="mr-1"> Admin </span>
+            <span class="mr-1"> {{ $auth.user.name }} </span>
             <outline-user-circle-icon class="h-6 w-6" />
           </div>
           <div

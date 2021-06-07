@@ -53,6 +53,7 @@
             type="submit"
             color="primary"
             size="lg"
+            :loading="loading"
             @click="login"
             >Đăng nhập</app-button
           >
@@ -73,6 +74,7 @@ export default {
         password: '',
       },
       serverErrors: [],
+      loading: false,
     }
   },
   head() {
@@ -85,14 +87,16 @@ export default {
       try {
         const isValid = await this.$refs.form.validate()
         if (isValid) {
+          this.loading = true
           await this.$auth.loginWith('local', {
             data: this.user,
           })
           this.$toast.success('Đăng nhập thành công.')
-          this.$router.push('/')
         }
       } catch (error) {
         this.serverErrors = error.response.data.errors
+      } finally {
+        this.loading = false
       }
     },
   },

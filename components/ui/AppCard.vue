@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white rounded-sm p-4">
     <div class="flex items-center justify-between mb-4">
-      <app-input-search @onSearch="onSearch" />
+      <app-input-search @onSearch="onSearch" class="mr-2" />
       <app-button
         color="primary"
         icon="outline-plus-circle-icon"

@@ -2,7 +2,7 @@
   <div>
     <app-header />
     <app-aside />
-    <main class="main-container mt-16 pl-64 bg-gray-100">
+    <main class="main-container mt-16 pl-16 lg:pl-64 bg-gray-100">
       <div class="p-4">
         <app-sub-header />
         <slot />

@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 text-gray-200 opacity-60">
+  <div class="p-2 lg:p-4 text-gray-200 opacity-60">
     <nuxt-link v-for="(menu, i) in menusComputed" :key="i" :to="menu.to">
       <aside-menu-item
         :text="menu.text"

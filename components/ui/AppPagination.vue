@@ -1,6 +1,8 @@
 <template>
-  <div class="flex items-center justify-between mt-4">
-    <div>
+  <div
+    class="flex flex-col sm:flex-row items-center justify-between mt-2 lg:mt-4"
+  >
+    <div class="hidden sm:block">
       Hiển thị từ {{ startRecord }} - {{ endRecord }} trên tổng số
       {{ meta.totalCount }}
     </div>
@@ -61,7 +63,8 @@
               mr-3
             "
             :class="{
-              'border-blue-500 text-blue-500': page === meta.currentPage,
+              'border-blue-500 text-blue-500 font-semi-bold':
+                page === meta.currentPage,
             }"
             :disabled="meta.currentPage === page"
             @click="onChangePage(page)"

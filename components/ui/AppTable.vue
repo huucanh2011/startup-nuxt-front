@@ -1,5 +1,5 @@
 <template>
-  <table class="table-auto w-full">
+  <table class="table-auto min-w-full overflow-x-auto">
     <thead>
       <tr class="border-b border-gray-200">
         <th

@@ -6,6 +6,8 @@
       ease-in-out
       flex
       items-center
+      justify-center
+      lg:justify-start
       group
       hover:bg-gray-500
       group
@@ -14,10 +16,11 @@
       py-2
       mb-1
     "
+    :title="text"
     :class="{ 'bg-gray-500': active }"
   >
-    <component :is="icon" class="h-6 w-6 mr-4" />
-    <span class="group-hover:text-white">{{ text }}</span>
+    <component :is="icon" class="h-6 w-6 mr-0 lg:mr-4" />
+    <span class="hidden lg:block group-hover:text-white">{{ text }}</span>
   </div>
 </template>
 

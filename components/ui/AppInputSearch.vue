@@ -3,8 +3,9 @@
     <input
       v-model="searchText"
       class="
-        w-64
+        w-full
         py-1
+        pr-6
         bg-t
         border-b border-gray-400
         focus:outline-none
@@ -13,6 +14,7 @@
         duration-300
       "
       placeholder="Tìm kiếm..."
+      v-bind="$attrs"
       @keydown.enter="onSearch"
       @keydown.esc="clear"
     />

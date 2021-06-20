@@ -25,11 +25,11 @@ export default {
     }
   },
   [UPDATE_CATEGORY](state, payload) {
-    const index = state.categories.find((c) => c.id === payload.id)
+    const index = state.categories.findIndex((c) => c.id === payload.id)
     state.categories.splice(index, 1, payload)
   },
   [DELETE_CATEGORY](state, id) {
-    const index = state.categories.find((c) => c.id === id)
+    const index = state.categories.findIndex((c) => c.id === id)
     state.categories.splice(index, 1)
   },
 }

@@ -14,27 +14,22 @@
 
     <app-confirm :show="dialogDelete" @close="closeDelete" @ok="confirmOk" />
 
-    <app-modal
+    <category-modal
       :show="dialog"
       :title="formTitle"
+      :category="editedItem"
       @submit="onSubmit"
       @close="close"
-    >
-      <app-input
-        v-model="editedItem.name"
-        label="Tên thể loại"
-        placeholder="Nhập tên thể loại"
-      />
-    </app-modal>
+    />
   </app-card>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import CategoryList from '~/components/category/CategoryList.vue'
-import AppModal from '~/components/ui/AppModal.vue'
+import CategoryModal from '~/components/category/CategoryModal.vue'
 export default {
-  components: { AppModal, CategoryList },
+  components: { CategoryList, CategoryModal },
   data() {
     return {
       dialog: false,
@@ -111,12 +106,12 @@ export default {
       this.editedItem = category
       this.dialog = true
     },
-    async onSubmit() {
+    async onSubmit(category) {
       try {
         if (this.editedIndex === -1) {
-          await this.createCategory(this.editedItem)
+          await this.createCategory(category)
         } else {
-          await this.updateCategory(this.editedItem)
+          await this.updateCategory(category)
         }
         this.close()
       } catch (error) {

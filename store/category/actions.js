@@ -40,7 +40,10 @@ export default {
   },
   async updateCategory({ commit }, payload) {
     try {
-      const { data, status } = await this.$axios.put('/categories', payload)
+      const { id, name } = payload
+      const { data, status } = await this.$axios.put(`/categories/${id}`, {
+        name,
+      })
       if (data && status === 200) {
         commit(UPDATE_CATEGORY, data)
       }

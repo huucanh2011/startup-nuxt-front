@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import CategoryList from '~/components/category/CategoryList.vue'
 import CategoryModal from '~/components/category/CategoryModal.vue'
 export default {
@@ -49,26 +49,25 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
-      categories: 'category/categories',
-      loading: 'category/loading',
-      meta: 'category/meta',
-    }),
+    ...mapState('category', ['categories', 'meta']),
+    loading() {
+      return this.$store.state.loading
+    },
     formTitle() {
       return this.editedIndex === -1 ? 'Thêm mới' : 'Cập nhật'
     },
   },
-  watchQuery: ['q', 'page', 'limit'],
-  mounted() {
-    this.fetchCategories()
+  watchQuery: ['q', 'page', 'imit'],
+  created() {
+    this.FETCH_CATEGORIES()
   },
   methods: {
-    ...mapActions({
-      fetchCategories: 'category/fetchCategories',
-      createCategory: 'category/createCategory',
-      updateCategory: 'category/updateCategory',
-      deleteCategory: 'category/deleteCategory',
-    }),
+    ...mapActions('category', [
+      'FETCH_CATEGORIES',
+      'CREATE_CATEGORY',
+      'UPDATE_CATEGORY',
+      'DELETE_CATEGORY',
+    ]),
     onSearch(q) {
       q && this.$router.push({ query: { q } })
     },
@@ -91,7 +90,7 @@ export default {
       })
     },
     confirmOk() {
-      this.deleteCategory(this.editedItem.id)
+      this.DELETE_CATEGORY(this.editedItem.id)
       this.closeDelete()
     },
     close() {
@@ -109,17 +108,22 @@ export default {
     async onSubmit(category) {
       try {
         if (this.editedIndex === -1) {
-          await this.createCategory(category)
+          await this.CREATE_CATEGORY(category)
         } else {
-          await this.updateCategory(category)
+          await this.UPDATE_CATEGORY(category)
         }
         this.close()
+        this.$notify({
+          type: 'success',
+          text: 'Thực hiện thành công.',
+        })
       } catch (error) {
-        console.log(error)
+        this.$notify({
+          type: 'error',
+          text: error.response.data.errors[0],
+        })
       }
     },
   },
 }
 </script>
-
-<style></style>

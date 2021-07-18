@@ -8,17 +8,7 @@
           <outline-x-icon class="w-6 h-6" />
         </button>
       </div>
-      <form @submit.prevent="onSave">
-        <div class="my-4">
-          <slot />
-        </div>
-        <div class="flex items-center justify-end">
-          <app-button class="mr-3" size="sm" type="button" @click="onCancel"
-            >Đóng</app-button
-          >
-          <app-button color="primary" size="sm" type="submit">Lưu</app-button>
-        </div>
-      </form>
+      <slot />
     </app-modal-base>
   </div>
 </template>
@@ -43,9 +33,6 @@ export default {
     },
   },
   methods: {
-    onSave() {
-      this.$emit('submit')
-    },
     onCancel() {
       this.$emit('close')
     },

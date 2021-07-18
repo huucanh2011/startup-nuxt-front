@@ -1,11 +1,13 @@
-import { SET_FILTER } from './mutation-types'
-
-export const state = () => ({
-  filter: '',
-})
+export const state = () => {
+  return {
+    loading: false,
+  }
+}
 
 export const mutations = {
-  [SET_FILTER](state, payload) {
-    state.filter = payload || ''
+  SET_LOADING(state, payload) {
+    state.loading = payload
   },
 }
+
+export const actions = {}

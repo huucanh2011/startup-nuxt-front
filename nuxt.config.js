@@ -21,11 +21,12 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '~/plugins/axios',
-    '~/plugins/vee-validate',
+    { src: '~/plugins/vee-validate', ssr: true },
     '~/plugins/global-components',
     '~/plugins/filters',
     '~/plugins/vuex-router-sync',
     '~/plugins/query-param-sync',
+    { src: '~/plugins/vue-notification', ssr: false },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -49,7 +50,6 @@ export default {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     'cookie-universal-nuxt',
-    '@nuxtjs/toast',
   ],
 
   toast: {
@@ -63,11 +63,6 @@ export default {
 
   auth: {
     localStorage: false,
-    cookie: {
-      options: {
-        expires: 7,
-      },
-    },
     strategies: {
       local: {
         token: {
@@ -78,7 +73,7 @@ export default {
         },
         endpoints: {
           login: { url: '/auth/login', method: 'post' },
-          user: { url: '/auth/me', method: 'post' },
+          user: { url: '/auth/me', method: 'post', propertyName: false },
           logout: false,
         },
       },
@@ -86,8 +81,11 @@ export default {
     redirect: {
       login: '/login',
       logout: '/login',
+      callback: '/login',
       home: '/',
     },
+    resetOnError: true,
+    fullPathRedirect: true,
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

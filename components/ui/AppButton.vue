@@ -10,7 +10,8 @@
       transition
       duration-300
     "
-    :class="[buttonClasses, sizeClasses]"
+    :class="[buttonClasses, sizeClasses, disabledClasses]"
+    :disabled="disabled"
     v-bind="$attrs"
     v-on="$listeners"
   >
@@ -56,7 +57,7 @@ export default {
       let classes
       switch (this.color) {
         case 'primary':
-          classes = 'bg-gray-900 border-gray-900 text-gray-100 hover:opacity-80'
+          classes = 'bg-gray-900 border-gray-900 text-gray-100'
           break
 
         default:
@@ -94,6 +95,11 @@ export default {
           break
       }
       return classes
+    },
+    disabledClasses() {
+      return this.disabled
+        ? 'cursor-not-allowed opacity-50'
+        : 'hover:opacity-80'
     },
   },
 }

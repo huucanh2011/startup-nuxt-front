@@ -90,7 +90,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'https://startup-spring-boot-api.herokuapp.com/api/v1',
+    baseURL: process.env.API_URL,
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

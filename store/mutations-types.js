@@ -1,0 +1,5 @@
+export const SET_LOADING = 'SET_LOADING'
+export const FETCH_CATEGORIES = 'FETCH_CATEGORIES'
+export const UPDATE_CATEGORY = 'UPDATE_CATEGORY'
+export const FETCH_USERS = 'FETCH_USERS'
+export const UPDATE_USER = 'UPDATE_USER'

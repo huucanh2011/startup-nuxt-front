@@ -11,4 +11,12 @@ const dateTime = (val) => {
   })
 }
 
+const displayDataNull = (val) => {
+  if (val === undefined || val === null || val === '') {
+    return '-'
+  }
+  return val
+}
+
 Vue.filter('dateTime', dateTime)
+Vue.filter('displayDataNull', displayDataNull)

@@ -1,4 +1,5 @@
 import qs from 'query-string'
+import { FETCH_USERS, UPDATE_USER } from './mutations-types'
 
 export const state = () => {
   return {
@@ -8,16 +9,13 @@ export const state = () => {
 }
 
 export const mutations = {
-  FETCH_USERS(state, { data, meta }) {
+  [FETCH_USERS](state, { data, meta }) {
     state.users = data
     state.meta = meta
   },
-  UPDATE_USER(state, payload) {
+  [UPDATE_USER](state, payload) {
     const index = state.users.findIndex((u) => u.id === payload.id)
     state.users.splice(index, 1, payload)
-  },
-  SET_LOADING(state, payload) {
-    state.loading = payload
   },
 }
 
@@ -32,6 +30,20 @@ export const actions = {
       commit('FETCH_USERS', res.data)
     }
     commit('SET_LOADING', false, { root: true })
+    return res
+  },
+  async CREATE_USER({ dispatch }, payload) {
+    const res = await this.$axios.post('/users', payload)
+    if (res.data && res.status === 201) {
+      dispatch('FETCH_USERS')
+    }
+    return res
+  },
+  async DELETE_USER({ dispatch }, id) {
+    const res = await this.$axios.delete(`/users/${id}`)
+    if (res.status === 204) {
+      dispatch('FETCH_USERS')
+    }
     return res
   },
 }

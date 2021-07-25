@@ -31,6 +31,27 @@
       :placeholder="placeholder"
       :type="type"
     />
+    <textarea
+      v-if="controlType === 'textarea'"
+      v-bind="ariaInput"
+      :id="name"
+      v-model="innerValue"
+      class="
+        py-1
+        bg-transparent
+        border-b
+        focus:outline-none
+        transition
+        duration-300
+        mb-3
+      "
+      :class="{
+        'border-gray-400 focus:border-blue-600': !errors[0],
+        'border-red-500': errors[0],
+      }"
+      :placeholder="placeholder"
+      :type="type"
+    />
     <span v-if="errors[0]" v-bind="ariaMsg" class="text-red-500">
       {{ errors[0] }}
     </span>

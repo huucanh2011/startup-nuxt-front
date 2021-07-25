@@ -13,14 +13,24 @@
     />
 
     <app-confirm :show="dialogDelete" @close="closeDelete" @ok="confirmOk" />
+
+    <user-modal
+      :show="dialog"
+      :title="formTitle"
+      :user="editedItem"
+      @submit="onSubmit"
+      @close="close"
+    />
   </app-card>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
 import UserList from '~/components/user/UserList.vue'
+import UserModal from '~/components/user/UserModal.vue'
+import { message } from '~/helpers/constants'
 export default {
-  components: { UserList },
+  components: { UserList, UserModal },
   data() {
     return {
       dialog: false,
@@ -28,9 +38,23 @@ export default {
       editedIndex: -1,
       editedItem: {
         name: '',
+        email: '',
+        password: '',
+        avatarPath: '',
+        address: '',
+        phoneNumber: '',
+        deliveryAddress: '',
+        role: '',
       },
       defaultItem: {
         name: '',
+        email: '',
+        password: '',
+        avatarPath: '',
+        address: '',
+        phoneNumber: '',
+        deliveryAddress: '',
+        role: '',
       },
     }
   },
@@ -57,7 +81,7 @@ export default {
       'FETCH_USERS',
       // 'CREATE_CATEGORY',
       // 'UPDATE_CATEGORY',
-      // 'DELETE_CATEGORY',
+      'DELETE_USER',
     ]),
     onSearch(q) {
       q && this.$router.push({ query: { q } })
@@ -81,40 +105,36 @@ export default {
       })
     },
     confirmOk() {
-      // this.DELETE_CATEGORY(this.editedItem.id)
-      // this.closeDelete()
+      this.DELETE_USER(this.editedItem.id)
+      this.$toast.success(message.deleted)
+      this.closeDelete()
     },
-    // close() {
-    //   this.dialog = false
-    //   this.$nextTick(() => {
-    //     this.editedItem = Object.assign({}, this.defaultItem)
-    //     this.editedIndex = -1
-    //   })
-    // },
+    close() {
+      this.dialog = false
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem)
+        this.editedIndex = -1
+      })
+    },
     editItem(user) {
       this.editedIndex = this.users.indexOf(user)
       this.editedItem = user
       this.dialog = true
     },
-    // async onSubmit(category) {
-    //   try {
-    //     if (this.editedIndex === -1) {
-    //       await this.CREATE_CATEGORY(category)
-    //     } else {
-    //       await this.UPDATE_CATEGORY(category)
-    //     }
-    //     this.close()
-    //     this.$notify({
-    //       type: 'success',
-    //       text: 'Thực hiện thành công.',
-    //     })
-    //   } catch (error) {
-    //     this.$notify({
-    //       type: 'error',
-    //       text: error.response.data.errors[0],
-    //     })
-    //   }
-    // },
+    onSubmit(user) {
+      try {
+        // if (this.editedIndex === -1) {
+        //   await this.CREATE_CATEGORY(category)
+        // } else {
+        //   await this.UPDATE_CATEGORY(category)
+        // }
+      } catch (error) {
+        // this.$notify({
+        //   type: 'error',
+        //   text: error.response.data.errors[0],
+        // })
+      }
+    },
   },
 }
 </script>

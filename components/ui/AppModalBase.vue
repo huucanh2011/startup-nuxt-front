@@ -44,6 +44,9 @@ export default {
         case 'lg':
           classes = 'width: 600px'
           break
+        case 'xl':
+          classes = 'width: 700px'
+          break
         default:
           classes = 'width: 500px'
           break

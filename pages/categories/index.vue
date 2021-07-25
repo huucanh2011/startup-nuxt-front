@@ -28,6 +28,7 @@
 import { mapState, mapActions } from 'vuex'
 import CategoryList from '~/components/category/CategoryList.vue'
 import CategoryModal from '~/components/category/CategoryModal.vue'
+import { message } from '~/helpers/constants'
 export default {
   components: { CategoryList, CategoryModal },
   data() {
@@ -75,6 +76,7 @@ export default {
       this.$router.push({ query: { ...this.$route.query, page } })
     },
     onChangeLimit(limit) {
+      this.$route.query.page = 1
       this.$router.push({ query: { ...this.$route.query, limit } })
     },
     deleteItem(category) {
@@ -91,6 +93,7 @@ export default {
     },
     confirmOk() {
       this.DELETE_CATEGORY(this.editedItem.id)
+      this.$toast.success(message.deleted)
       this.closeDelete()
     },
     close() {
@@ -109,19 +112,14 @@ export default {
       try {
         if (this.editedIndex === -1) {
           await this.CREATE_CATEGORY(category)
+          this.$toast.success(message.created)
         } else {
           await this.UPDATE_CATEGORY(category)
+          this.$toast.success(message.updated)
         }
         this.close()
-        this.$notify({
-          type: 'success',
-          text: 'Thực hiện thành công.',
-        })
       } catch (error) {
-        this.$notify({
-          type: 'error',
-          text: error.response.data.errors[0],
-        })
+        this.$toast.error(error.response.data.errors[0])
       }
     },
   },

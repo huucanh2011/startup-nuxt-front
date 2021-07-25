@@ -1,4 +1,5 @@
 import qs from 'query-string'
+import { FETCH_CATEGORIES, UPDATE_CATEGORY } from './mutations-types'
 
 export const state = () => {
   return {
@@ -8,16 +9,13 @@ export const state = () => {
 }
 
 export const mutations = {
-  FETCH_CATEGORIES(state, { data, meta }) {
+  [FETCH_CATEGORIES](state, { data, meta }) {
     state.categories = data
     state.meta = meta
   },
-  UPDATE_CATEGORY(state, payload) {
+  [UPDATE_CATEGORY](state, payload) {
     const index = state.categories.findIndex((c) => c.id === payload.id)
     state.categories.splice(index, 1, payload)
-  },
-  SET_LOADING(state, payload) {
-    state.loading = payload
   },
 }
 

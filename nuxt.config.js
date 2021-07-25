@@ -1,4 +1,5 @@
 export default {
+  ssr: false,
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: '%s - Startup Luvina',
@@ -26,7 +27,6 @@ export default {
     '~/plugins/filters',
     '~/plugins/vuex-router-sync',
     '~/plugins/query-param-sync',
-    { src: '~/plugins/vue-notification', ssr: false },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -50,6 +50,7 @@ export default {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     'cookie-universal-nuxt',
+    '@nuxtjs/toast',
   ],
 
   toast: {
@@ -58,7 +59,7 @@ export default {
   },
 
   router: {
-    middleware: ['auth'],
+    middleware: ['auth', 'is-admin'],
   },
 
   auth: {

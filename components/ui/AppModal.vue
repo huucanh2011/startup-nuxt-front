@@ -1,7 +1,7 @@
 <template>
   <div v-show="show">
     <app-backdrop />
-    <app-modal-base>
+    <app-modal-base :size="size">
       <div class="flex items-center justify-between mb-3">
         <div class="font-semibold">{{ title }}</div>
         <button @click="onCancel">
@@ -25,6 +25,10 @@ export default {
     title: {
       type: String,
       default: '',
+    },
+    size: {
+      type: String,
+      default: 'md',
     },
   },
   watch: {

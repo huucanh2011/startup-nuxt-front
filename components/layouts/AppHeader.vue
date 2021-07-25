@@ -67,10 +67,6 @@ export default {
     },
     async logout() {
       await this.$auth.logout()
-      // this.$notify({
-      //   group: 'success',
-      //   text: 'Đăng xuất.',
-      // })
     },
   },
 }

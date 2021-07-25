@@ -1,10 +1,12 @@
 <template>
   <tr class="row">
     <td>{{ no }}</td>
-    <td>{{ user.avatarPath }}</td>
+    <td>
+      <app-avatar :src="user.avatarPath" :alt="user.name" />
+    </td>
     <td>{{ user.name }}</td>
     <td>{{ user.email }}</td>
-    <td>{{ user.address }}</td>
+    <td>{{ user.address | displayDataNull }}</td>
     <td>{{ user.role }}</td>
     <td>{{ user.entryDate | dateTime }}</td>
     <td>{{ user.updateDate | dateTime }}</td>

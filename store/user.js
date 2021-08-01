@@ -1,5 +1,5 @@
 import qs from 'query-string'
-import { FETCH_USERS, UPDATE_USER } from './mutations-types'
+import { FETCH_USERS, SET_LOADING, UPDATE_USER } from './mutations-types'
 
 export const state = () => {
   return {
@@ -24,12 +24,12 @@ export const actions = {
     const query = rootState.route.query
       ? `?${qs.stringify(rootState.route.query)}`
       : ''
-    commit('SET_LOADING', true, { root: true })
+    commit(SET_LOADING, true, { root: true })
     const res = await this.$axios.get(`/users${query}`)
     if (res.data && res.status === 200) {
-      commit('FETCH_USERS', res.data)
+      commit(FETCH_USERS, res.data)
     }
-    commit('SET_LOADING', false, { root: true })
+    commit(SET_LOADING, false, { root: true })
     return res
   },
   async CREATE_USER({ dispatch }, payload) {
@@ -38,6 +38,16 @@ export const actions = {
       dispatch('FETCH_USERS')
     }
     return res
+  },
+  async UPDATE_USER({ commit }, payload) {
+    const userId = payload.id
+    delete payload.id
+    delete payload.entryDate
+    delete payload.updateDate
+    const res = await this.$axios.put(`/users/${userId}`, payload)
+    if (res.data && res.status === 200) {
+      commit(UPDATE_USER, res.data)
+    }
   },
   async DELETE_USER({ dispatch }, id) {
     const res = await this.$axios.delete(`/users/${id}`)

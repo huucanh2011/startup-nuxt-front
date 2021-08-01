@@ -18,6 +18,7 @@
       :show="dialog"
       :title="formTitle"
       :user="editedItem"
+      :is-edit="editedIndex"
       @submit="onSubmit"
       @close="close"
     />
@@ -79,8 +80,8 @@ export default {
   methods: {
     ...mapActions('user', [
       'FETCH_USERS',
-      // 'CREATE_CATEGORY',
-      // 'UPDATE_CATEGORY',
+      'CREATE_USER',
+      'UPDATE_USER',
       'DELETE_USER',
     ]),
     onSearch(q) {
@@ -121,18 +122,18 @@ export default {
       this.editedItem = user
       this.dialog = true
     },
-    onSubmit(user) {
+    async onSubmit(user) {
       try {
-        // if (this.editedIndex === -1) {
-        //   await this.CREATE_CATEGORY(category)
-        // } else {
-        //   await this.UPDATE_CATEGORY(category)
-        // }
+        if (this.editedIndex === -1) {
+          await this.CREATE_USER(user)
+          this.$toast.success(message.created)
+        } else {
+          await this.UPDATE_USER(user)
+          this.$toast.success(message.updated)
+        }
+        this.close()
       } catch (error) {
-        // this.$notify({
-        //   type: 'error',
-        //   text: error.response.data.errors[0],
-        // })
+        this.$toast.error(error.response.data.errors[0])
       }
     },
   },

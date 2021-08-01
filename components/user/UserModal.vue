@@ -24,6 +24,7 @@
           </div>
           <div class="flex justify-between">
             <app-input
+              v-if="isEdit === -1"
               v-model="editedItem.password"
               class="w-1/2 mr-2"
               type="password"
@@ -32,6 +33,10 @@
               label="Mật khẩu"
               placeholder="Nhập mật khẩu"
             />
+            <div v-else class="flex flex-col items-start justify-start">
+              <span class="font-semibold mb-1">Mật khẩu</span>
+              <span>Bạn không thể cập nhật mật khẩu.</span>
+            </div>
             <app-radio
               v-model="editedItem.role"
               :radios="[
@@ -114,6 +119,10 @@ export default {
       default: () => {
         return {}
       },
+    },
+    isEdit: {
+      type: Number,
+      default: -1,
     },
   },
   computed: {

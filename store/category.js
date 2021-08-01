@@ -1,5 +1,9 @@
 import qs from 'query-string'
-import { FETCH_CATEGORIES, UPDATE_CATEGORY } from './mutations-types'
+import {
+  FETCH_CATEGORIES,
+  SET_LOADING,
+  UPDATE_CATEGORY,
+} from './mutations-types'
 
 export const state = () => {
   return {
@@ -24,10 +28,10 @@ export const actions = {
     const query = rootState.route.query
       ? `?${qs.stringify(rootState.route.query)}`
       : ''
-    commit('SET_LOADING', true, { root: true })
+    commit(SET_LOADING, true, { root: true })
     const res = await this.$axios.get(`/categories${query}`)
     if (res.data && res.status === 200) {
-      commit('FETCH_CATEGORIES', res.data)
+      commit(FETCH_CATEGORIES, res.data)
     }
     commit('SET_LOADING', false, { root: true })
     return res
@@ -43,7 +47,7 @@ export const actions = {
     const { id, name } = payload
     const res = await this.$axios.put(`/categories/${id}`, { name })
     if (res.data && res.status === 200) {
-      commit('UPDATE_CATEGORY', res.data)
+      commit(UPDATE_CATEGORY, res.data)
     }
   },
   async DELETE_CATEGORY({ dispatch }, id) {

@@ -7,7 +7,11 @@
     <td>{{ user.name }}</td>
     <td>{{ user.email }}</td>
     <td>{{ user.address | displayDataNull }}</td>
-    <td>{{ user.role }}</td>
+    <td>
+      <app-tag :type="tagTypeRole(user.role)">
+        {{ user.role.toLowerCase() }}
+      </app-tag>
+    </td>
     <td>{{ user.entryDate | dateTime }}</td>
     <td>{{ user.updateDate | dateTime }}</td>
     <td class="flex items-center">
@@ -35,6 +39,11 @@ export default {
     no: {
       type: Number,
       default: 0,
+    },
+  },
+  methods: {
+    tagTypeRole(val) {
+      return val === 'ADMIN' ? 'red' : 'blue-2'
     },
   },
 }

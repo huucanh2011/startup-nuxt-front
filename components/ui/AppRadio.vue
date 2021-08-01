@@ -7,9 +7,9 @@
     :rules="rules"
     immediate
   >
-    <label v-if="label" class="flex items-center font-semibold mb-1">
-      {{ label }}
-      <span class="ml-1 text-red-500">{{ required ? '*' : '' }}</span>
+    <label v-if="label" class="flex items-center mb-1">
+      <span class="font-semibold">{{ label }}</span>
+      <span class="mx-1 text-red-500">{{ required ? '*' : '' }}</span>
       <span v-if="errors[0]" v-bind="ariaMsg" class="text-red-500">
         {{ errors[0] }}
       </span>

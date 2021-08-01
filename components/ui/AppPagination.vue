@@ -8,19 +8,11 @@
     </div>
 
     <div class="flex items-center">
-      <select
-        class="h-8 p-1 border border-gray-400 rounded"
+      <app-select
+        :selections="options"
+        :selected="limitSelected"
         @change="onChangeLimit"
-      >
-        <option
-          v-for="(option, i) in options"
-          :key="i"
-          :value="option.value"
-          :selected="limitSelected(option)"
-        >
-          {{ option.title }}
-        </option>
-      </select>
+      />
 
       <div class="flex flex-col items-center">
         <div class="flex text-gray-600">
@@ -34,8 +26,7 @@
               bg-white
               border border-gray-400
               rounded
-              hover:border-blue-500
-              hover:text-blue-500
+              hover:border-blue-500 hover:text-blue-500
               focus:outline-none
               ml-4
               mr-3
@@ -57,8 +48,7 @@
               bg-white
               border border-gray-400
               rounded
-              hover:border-blue-500
-              hover:text-blue-500
+              hover:border-blue-500 hover:text-blue-500
               focus:outline-none
               mr-3
             "
@@ -81,8 +71,7 @@
               bg-white
               border border-gray-400
               rounded
-              hover:border-blue-500
-              hover:text-blue-500
+              hover:border-blue-500 hover:text-blue-500
               focus:outline-none
             "
             :disabled="meta.currentPage === meta.totalPages"
@@ -97,6 +86,7 @@
 </template>
 
 <script>
+import { limitOptions } from '~/helpers/constants'
 export default {
   props: {
     meta: {
@@ -109,20 +99,7 @@ export default {
   data() {
     return {
       active: true,
-      options: [
-        {
-          title: '5/page',
-          value: 5,
-        },
-        {
-          title: '10/page',
-          value: 10,
-        },
-        {
-          title: '15/page',
-          value: 15,
-        },
-      ],
+      options: limitOptions,
     }
   },
   computed: {
@@ -134,6 +111,9 @@ export default {
       const { totalCount, currentPage, limit } = this.meta
       return limit * currentPage > totalCount ? totalCount : limit * currentPage
     },
+    limitSelected() {
+      return +this.$store.state.route.query.limit
+    },
   },
   methods: {
     onChangePage(page) {
@@ -141,9 +121,6 @@ export default {
     },
     onChangeLimit(e) {
       this.$emit('onChangeLimit', e.target.value)
-    },
-    limitSelected({ value }) {
-      return +value === +this.$store.state.route.query.limit
     },
   },
 }

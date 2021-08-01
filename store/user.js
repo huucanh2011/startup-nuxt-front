@@ -21,11 +21,10 @@ export const mutations = {
 
 export const actions = {
   async FETCH_USERS({ commit, rootState }) {
-    const query = rootState.route.query
-      ? `?${qs.stringify(rootState.route.query)}`
-      : ''
     commit(SET_LOADING, true, { root: true })
-    const res = await this.$axios.get(`/users${query}`)
+    const query = rootState.route.query
+    const queryString = query ? `?${qs.stringify(query)}` : ''
+    const res = await this.$axios.get(`/users${queryString}`)
     if (res.data && res.status === 200) {
       commit(FETCH_USERS, res.data)
     }
@@ -35,7 +34,7 @@ export const actions = {
   async CREATE_USER({ dispatch }, payload) {
     const res = await this.$axios.post('/users', payload)
     if (res.data && res.status === 201) {
-      dispatch('FETCH_USERS')
+      dispatch(FETCH_USERS)
     }
     return res
   },
@@ -48,11 +47,12 @@ export const actions = {
     if (res.data && res.status === 200) {
       commit(UPDATE_USER, res.data)
     }
+    return res
   },
   async DELETE_USER({ dispatch }, id) {
     const res = await this.$axios.delete(`/users/${id}`)
     if (res.status === 204) {
-      dispatch('FETCH_USERS')
+      dispatch(FETCH_USERS)
     }
     return res
   },

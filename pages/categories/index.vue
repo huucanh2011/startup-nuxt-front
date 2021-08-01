@@ -11,9 +11,7 @@
       @onChangePage="onChangePage"
       @onChangeLimit="onChangeLimit"
     />
-
     <app-confirm :show="dialogDelete" @close="closeDelete" @ok="confirmOk" />
-
     <category-modal
       :show="dialog"
       :title="formTitle"
@@ -102,6 +100,7 @@ export default {
         this.editedItem = Object.assign({}, this.defaultItem)
         this.editedIndex = -1
       })
+      this.$nuxt.$emit('reset-form')
     },
     editItem(category) {
       this.editedIndex = this.categories.indexOf(category)

@@ -28,7 +28,7 @@
               v-model="editedItem.password"
               class="w-1/2 mr-2"
               type="password"
-              rules="required"
+              rules="required|min:6"
               name="password"
               label="Mật khẩu"
               placeholder="Nhập mật khẩu"
@@ -39,12 +39,8 @@
             </div>
             <app-radio
               v-model="editedItem.role"
-              :radios="[
-                { label: 'Admin', value: 'ADMIN' },
-                { label: 'User', value: 'USER' },
-              ]"
+              :radios="roles"
               class="w-1/2 ml-2"
-              rules="required"
               name="role"
               label="Quyền"
             />
@@ -125,6 +121,14 @@ export default {
       default: -1,
     },
   },
+  data() {
+    return {
+      roles: [
+        { label: 'Admin', value: 'ADMIN' },
+        { label: 'User', value: 'USER' },
+      ],
+    }
+  },
   computed: {
     editedItem() {
       return this.user
@@ -137,17 +141,25 @@ export default {
             address: '',
             phoneNumber: '',
             deliveryAddress: '',
-            role: '',
+            role: 'USER',
           }
     },
+  },
+  created() {
+    this.$nuxt.$on('reset-form', () => this.resetForm())
+  },
+  beforeDestroy() {
+    this.$nuxt.$off('reset-form')
   },
   methods: {
     async onSave() {
       const isValid = await this.$refs.form.validate()
       isValid && this.$emit('submit', this.editedItem)
     },
+    resetForm() {
+      this.$refs.form && this.$refs.form.reset()
+    },
     onClose() {
-      this.$refs.form.reset()
       this.$emit('close')
     },
   },

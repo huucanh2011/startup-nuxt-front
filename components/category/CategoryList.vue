@@ -1,6 +1,10 @@
 <template>
   <app-table :headers="headers">
     <loading-row-table v-if="loading" :column-size="headers.length" />
+    <notfound-table
+      v-else-if="categories.length === 0"
+      :col-span="headers.length"
+    />
     <category-list-item
       v-for="(category, i) in categories"
       v-else
@@ -15,9 +19,10 @@
 
 <script>
 import LoadingRowTable from '../shared/LoadingRowTable.vue'
+import NotfoundTable from '../shared/NotfoundTable.vue'
 import CategoryListItem from './CategoryListItem.vue'
 export default {
-  components: { LoadingRowTable, CategoryListItem },
+  components: { LoadingRowTable, CategoryListItem, NotfoundTable },
   props: {
     loading: {
       type: Boolean,

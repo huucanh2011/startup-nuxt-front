@@ -45,7 +45,7 @@ export default {
         address: '',
         phoneNumber: '',
         deliveryAddress: '',
-        role: '',
+        role: 'USER',
       },
       defaultItem: {
         name: '',
@@ -55,7 +55,7 @@ export default {
         address: '',
         phoneNumber: '',
         deliveryAddress: '',
-        role: '',
+        role: 'USER',
       },
     }
   },
@@ -116,6 +116,7 @@ export default {
         this.editedItem = Object.assign({}, this.defaultItem)
         this.editedIndex = -1
       })
+      this.$nuxt.$emit('reset-form')
     },
     editItem(user) {
       this.editedIndex = this.users.indexOf(user)

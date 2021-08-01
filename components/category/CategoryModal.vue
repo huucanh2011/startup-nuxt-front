@@ -56,13 +56,21 @@ export default {
       return this.category ? { ...this.category } : { name: '' }
     },
   },
+  created() {
+    this.$nuxt.$on('reset-form', () => this.resetForm())
+  },
+  beforeDestroy() {
+    this.$nuxt.$off('reset-form')
+  },
   methods: {
     async onSave() {
       const isValid = await this.$refs.form.validate()
       isValid && this.$emit('submit', this.editedItem)
     },
+    resetForm() {
+      this.$refs.form && this.$refs.form.reset()
+    },
     onClose() {
-      this.$refs.form.reset()
       this.$emit('close')
     },
   },

@@ -25,21 +25,20 @@ export const mutations = {
 
 export const actions = {
   async FETCH_CATEGORIES({ commit, rootState }) {
-    const query = rootState.route.query
-      ? `?${qs.stringify(rootState.route.query)}`
-      : ''
     commit(SET_LOADING, true, { root: true })
-    const res = await this.$axios.get(`/categories${query}`)
+    const query = rootState.route.query
+    const queryString = query ? `?${qs.stringify(query)}` : ''
+    const res = await this.$axios.get(`/categories${queryString}`)
     if (res.data && res.status === 200) {
       commit(FETCH_CATEGORIES, res.data)
     }
-    commit('SET_LOADING', false, { root: true })
+    commit(SET_LOADING, false, { root: true })
     return res
   },
   async CREATE_CATEGORY({ dispatch }, payload) {
     const res = await this.$axios.post('/categories', payload)
     if (res.data && res.status === 201) {
-      dispatch('FETCH_CATEGORIES')
+      dispatch(FETCH_CATEGORIES)
     }
     return res
   },
@@ -49,11 +48,12 @@ export const actions = {
     if (res.data && res.status === 200) {
       commit(UPDATE_CATEGORY, res.data)
     }
+    return res
   },
   async DELETE_CATEGORY({ dispatch }, id) {
     const res = await this.$axios.delete(`/categories/${id}`)
     if (res.status === 204) {
-      dispatch('FETCH_CATEGORIES')
+      dispatch(FETCH_CATEGORIES)
     }
     return res
   },

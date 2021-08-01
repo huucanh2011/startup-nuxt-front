@@ -1,12 +1,15 @@
 <template>
   <app-table :headers="headers">
     <loading-row-table v-if="loading" :column-size="headers.length" />
-    <notfound-table v-else-if="users.length === 0" :col-span="headers.length" />
-    <user-list-item
-      v-for="(user, i) in users"
+    <notfound-table
+      v-else-if="products.length === 0"
+      :col-span="headers.length"
+    />
+    <product-list-item
+      v-for="(product, i) in products"
       v-else
-      :key="user.id"
-      :user="user"
+      :key="product.id"
+      :product="product"
       :no="++i"
       @edit="onEdit"
       @delete="onDelete"
@@ -17,15 +20,15 @@
 <script>
 import LoadingRowTable from '../shared/LoadingRowTable.vue'
 import NotfoundTable from '../shared/NotfoundTable.vue'
-import UserListItem from './UserListItem.vue'
+import ProductListItem from './ProductListItem.vue'
 export default {
-  components: { LoadingRowTable, UserListItem, NotfoundTable },
+  components: { LoadingRowTable, ProductListItem, NotfoundTable },
   props: {
     loading: {
       type: Boolean,
       default: false,
     },
-    users: {
+    products: {
       type: Array,
       default: () => {
         return []
@@ -39,19 +42,22 @@ export default {
           title: 'No.',
         },
         {
-          title: 'Avatar',
+          title: 'Code',
         },
         {
           title: 'Tên',
         },
         {
-          title: 'Email',
+          title: 'Hãng',
         },
         {
-          title: 'Địa chỉ',
+          title: 'Giá',
         },
         {
-          title: 'Role',
+          title: 'Còn lại',
+        },
+        {
+          title: 'Hiển thị',
         },
         {
           title: 'Ngày tạo',

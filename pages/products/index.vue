@@ -1,11 +1,11 @@
 <template>
   <div>
     Products
-    <ul>
+    <!-- <ul>
       <li v-for="product in products" :key="product.id">
         {{ product.name }}
       </li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 

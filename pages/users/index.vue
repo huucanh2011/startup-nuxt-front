@@ -91,6 +91,7 @@ export default {
       this.$router.push({ query: { ...this.$route.query, page } })
     },
     onChangeLimit(limit) {
+      this.$route.query.page = 1
       this.$router.push({ query: { ...this.$route.query, limit } })
     },
     deleteItem(user) {

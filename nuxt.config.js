@@ -52,6 +52,7 @@ export default {
     '@nuxtjs/pwa',
     'cookie-universal-nuxt',
     '@nuxtjs/toast',
+    'nuxt-lazy-load',
   ],
 
   toast: {

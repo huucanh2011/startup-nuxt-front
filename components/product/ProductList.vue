@@ -12,6 +12,7 @@
       :product="product"
       :no="++i"
       @edit="onEdit"
+      @changeActive="onChangeActive"
       @delete="onDelete"
     />
   </app-table>
@@ -74,6 +75,9 @@ export default {
   methods: {
     onEdit(val) {
       this.$emit('edit', val)
+    },
+    onChangeActive(val) {
+      this.$emit('changeActive', val)
     },
     onDelete(val) {
       this.$emit('delete', val)

@@ -12,9 +12,19 @@
               label="Mã"
               placeholder="Nhập mã"
             />
+            <app-select
+              v-model="editedItem.categoryId"
+              :options="categories"
+              label="Thể loại"
+              class="w-1/2 ml-2"
+              rules="required"
+              name="category"
+            />
+          </div>
+          <div class="flex">
             <app-input
               v-model="editedItem.name"
-              class="w-1/2 ml-2"
+              class="w-full"
               rules="required"
               name="name"
               label="Tên"
@@ -22,28 +32,22 @@
             />
           </div>
           <div class="flex justify-between">
-            <select v-model="editedItem.brandId">
-              <option v-for="brand in brands" :key="brand.id" :value="brand.id">
-                {{ brand.name }}
-              </option>
-            </select>
-            <select v-model="editedItem.sizeId">
-              <option v-for="size in sizes" :key="size.id" :value="size.id">
-                {{ size.name }} - {{ size.shirt ? 'Áo' : 'Quần' }}
-              </option>
-            </select>
-          </div>
-          <div class="flex justify-between">
-            <select v-model="editedItem.categoryId">
-              <option
-                v-for="category in categories"
-                :key="category.id"
-                :value="category.id"
-              >
-                {{ category.name }}
-              </option>
-            </select>
-            <input v-model="editedItem.isActive" type="checkbox" />
+            <app-select
+              v-model="editedItem.brandId"
+              :options="brands"
+              label="Hãng"
+              class="w-1/2 mr-2"
+              rules="required"
+              name="brand"
+            />
+            <app-select
+              v-model="editedItem.sizeId"
+              :options="sizes"
+              label="Size"
+              class="w-1/2 ml-2"
+              rules="required"
+              name="size"
+            />
           </div>
           <div class="flex justify-between">
             <app-input
@@ -131,18 +135,6 @@ export default {
         return {}
       },
     },
-    isEdit: {
-      type: Number,
-      default: -1,
-    },
-  },
-  data() {
-    return {
-      roles: [
-        { label: 'Admin', value: 'ADMIN' },
-        { label: 'User', value: 'USER' },
-      ],
-    }
   },
   computed: {
     editedItem() {
@@ -164,13 +156,19 @@ export default {
           }
     },
     brands() {
-      return this.$store.state.brands
+      const brands = this.$store.state.brands
+      return brands.map((b) => ({ value: b.id, title: b.name }))
     },
     sizes() {
-      return this.$store.state.sizes
+      const sizes = this.$store.state.sizes
+      return sizes.map((s) => ({
+        value: s.id,
+        title: `${s.name} - ${s.shirt ? 'Áo' : 'Quần'}`,
+      }))
     },
     categories() {
-      return this.$store.state.category.categories
+      const categories = this.$store.state.category.categories
+      return categories.map((c) => ({ value: c.id, title: c.name }))
     },
   },
   created() {
@@ -182,7 +180,12 @@ export default {
   methods: {
     async onSave() {
       const isValid = await this.$refs.form.validate()
-      isValid && this.$emit('submit', this.editedItem)
+      if (isValid) {
+        const gallery = this.editedItem.gallery
+          .replace(' ', '')
+          .replace(/.$/, '')
+        this.$emit('submit', { ...this.editedItem, gallery })
+      }
     },
     resetForm() {
       this.$refs.form && this.$refs.form.reset()

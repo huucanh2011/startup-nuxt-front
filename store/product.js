@@ -31,6 +31,12 @@ export const actions = {
     commit(SET_LOADING, false, { root: true })
     return res
   },
+  async GET_PRODUCT_BY_ID(vueContext, productId) {
+    const res = await this.$axios.get(`/products/${productId}`)
+    if (res.data && res.status === 200) {
+      return res.data
+    }
+  },
   async CREATE_PRODUCT({ dispatch }, payload) {
     const res = await this.$axios.post('/products', payload)
     if (res.data && res.status === 201) {

@@ -26,7 +26,7 @@ export default {
           classes = 'bg-tag-blue-1 text-white'
           break
         case 'green':
-          classes = 'bg-tag-blue-green text-white'
+          classes = 'bg-tag-green text-white'
           break
         case 'blue-2':
           classes = 'bg-tag-blue-2 text-white'

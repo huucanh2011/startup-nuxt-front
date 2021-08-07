@@ -23,7 +23,7 @@ export default {
   computed: {
     menusComputed() {
       return this.menus.map((m) =>
-        m.to === this.$route.path
+        this.$route.name.startsWith(m.name)
           ? { ...m, active: true }
           : { ...m, active: false }
       )

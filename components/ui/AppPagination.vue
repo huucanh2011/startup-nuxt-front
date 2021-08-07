@@ -8,11 +8,19 @@
     </div>
 
     <div class="flex items-center">
-      <app-select
-        :selections="options"
-        :selected="limitSelected"
+      <select
+        class="h-8 p-1 border border-gray-400 rounded"
         @change="onChangeLimit"
-      />
+      >
+        <option
+          v-for="(option, i) in options"
+          :key="i"
+          :value="option.value"
+          :selected="option.value === limitSelected"
+        >
+          {{ option.title }}
+        </option>
+      </select>
 
       <div class="flex flex-col items-center">
         <div class="flex text-gray-600">

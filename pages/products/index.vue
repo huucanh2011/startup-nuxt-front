@@ -3,7 +3,8 @@
     <product-list
       :products="products"
       :loading="loading"
-      @edit="editedItem"
+      @edit="editItem"
+      @changeActive="changeActive"
       @delete="deleteItem"
     />
     <app-pagination
@@ -67,7 +68,7 @@ export default {
   },
   head() {
     return {
-      title: 'Thể loại',
+      title: 'Sản phẩm',
     }
   },
   computed: {
@@ -76,7 +77,9 @@ export default {
       return this.$store.state.loading
     },
     formTitle() {
-      return this.editedIndex === -1 ? 'Thêm mới' : 'Cập nhật'
+      return this.editedIndex === -1
+        ? 'Thêm mới'
+        : `Cập nhật #${this.editedItem.code}`
     },
   },
   created() {
@@ -85,6 +88,7 @@ export default {
   methods: {
     ...mapActions('product', [
       'FETCH_PRODUCTS',
+      'GET_PRODUCT_BY_ID',
       'CREATE_PRODUCT',
       'UPDATE_PRODUCT',
       'DELETE_PRODUCT',
@@ -124,10 +128,15 @@ export default {
       })
       this.$nuxt.$emit('reset-form')
     },
-    editItem(product) {
-      this.editedIndex = this.products.indexOf(product)
+    async editItem(productId) {
+      const product = await this.GET_PRODUCT_BY_ID(productId)
+      this.editedIndex = this.products.findIndex((p) => p.id === product.id)
       this.editedItem = product
       this.dialog = true
+    },
+    async changeActive(product) {
+      await this.UPDATE_PRODUCT({ ...product, isActive: !product.isActive })
+      this.$toast.success(message.updated)
     },
     async onSubmit(product) {
       try {

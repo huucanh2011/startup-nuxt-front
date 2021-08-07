@@ -31,11 +31,6 @@ export default {
       default: 'md',
     },
   },
-  watch: {
-    show() {
-      document.body.style.overflow = this.show ? 'hidden' : ''
-    },
-  },
   methods: {
     onCancel() {
       this.$emit('close')

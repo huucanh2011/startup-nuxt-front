@@ -18,5 +18,10 @@ const displayDataNull = (val) => {
   return val
 }
 
+const currencyVNFormat = (val) => {
+  return `${val.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1,')} đ`
+}
+
 Vue.filter('dateTime', dateTime)
 Vue.filter('displayDataNull', displayDataNull)
+Vue.filter('currencyVN', currencyVNFormat)

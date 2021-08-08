@@ -81,6 +81,7 @@
       <img
         v-for="(g, i) in gallery"
         :key="i"
+        v-lazy-load
         :src="g"
         :alt="`${product.code}__${i}`"
         class="w-1/3 mt-4 px-2"

@@ -24,10 +24,15 @@ export const mutations = {
 }
 
 export const actions = {
-  async FETCH_CATEGORIES({ commit, rootState }) {
+  async FETCH_CATEGORIES({ commit, rootState }, isGetAll) {
+    let queryString
     commit(SET_LOADING, true, { root: true })
-    const query = rootState.route.query
-    const queryString = query ? `?${qs.stringify(query)}` : ''
+    if (!isGetAll) {
+      const query = rootState.route.query
+      queryString = query ? `?${qs.stringify(query)}` : ''
+    } else {
+      queryString = '?limit=100'
+    }
     const res = await this.$axios.get(`/categories${queryString}`)
     if (res.data && res.status === 200) {
       commit(FETCH_CATEGORIES, res.data)

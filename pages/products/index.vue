@@ -125,8 +125,8 @@ export default {
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
         this.editedIndex = -1
+        this.$nuxt.$emit('reset-form')
       })
-      this.$nuxt.$emit('reset-form')
     },
     async editItem(productId) {
       const product = await this.GET_PRODUCT_BY_ID(productId)

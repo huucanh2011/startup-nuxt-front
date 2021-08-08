@@ -160,6 +160,7 @@ export default {
       this.$refs.form && this.$refs.form.reset()
     },
     onClose() {
+      this.resetForm()
       this.$emit('close')
     },
   },

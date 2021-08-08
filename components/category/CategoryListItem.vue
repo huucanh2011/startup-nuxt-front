@@ -5,15 +5,17 @@
     <td>{{ category.slug }}</td>
     <td>{{ category.entryDate | dateTime }}</td>
     <td>{{ category.updateDate | dateTime }}</td>
-    <td class="flex items-center">
-      <span @click="$emit('edit', category)">
-        <outline-pencil-icon
-          class="h-4 w-4 text-blue-500 cursor-pointer mr-4"
-        />
-      </span>
-      <span @click="$emit('delete', category)">
-        <outline-trash-icon class="h-4 w-4 text-red-500 cursor-pointer" />
-      </span>
+    <td>
+      <div class="flex items-center">
+        <span @click="$emit('edit', category)">
+          <outline-pencil-icon
+            class="h-4 w-4 text-blue-500 cursor-pointer mr-4"
+          />
+        </span>
+        <span @click="$emit('delete', category)">
+          <outline-trash-icon class="h-4 w-4 text-red-500 cursor-pointer" />
+        </span>
+      </div>
     </td>
   </tr>
 </template>

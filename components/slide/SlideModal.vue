@@ -4,11 +4,24 @@
       <form @submit.prevent="handleSubmit(onSave)">
         <div class="my-4">
           <app-input
-            v-model="editedItem.name"
+            v-model="editedItem.title"
             rules="required"
-            name="name"
-            label="Tên thể loại"
-            placeholder="Nhập tên thể loại"
+            name="title"
+            label="Tiêu đề"
+            placeholder="Nhập tiêu đề"
+          />
+          <app-input
+            v-model="editedItem.image"
+            rules="required"
+            name="image"
+            label="Hình"
+            placeholder="Nhập link hình"
+          />
+          <app-input
+            v-model="editedItem.link"
+            name="link"
+            label="Link"
+            placeholder="Nhập link"
           />
         </div>
         <div class="flex items-center justify-end">
@@ -43,7 +56,7 @@ export default {
       type: String,
       default: '',
     },
-    category: {
+    slide: {
       type: Object,
       required: false,
       default: () => {
@@ -53,7 +66,7 @@ export default {
   },
   computed: {
     editedItem() {
-      return this.category ? { ...this.category } : { name: '' }
+      return this.slide ? { ...this.slide } : { title: '', image: '', link: '' }
     },
   },
   created() {

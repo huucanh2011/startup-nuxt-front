@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="meta.totalCount > 0"
     class="flex flex-col sm:flex-row items-center justify-between mt-2 lg:mt-4"
   >
     <div class="hidden sm:block">

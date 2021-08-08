@@ -2,31 +2,32 @@
   <tr class="row">
     <td>{{ no }}</td>
     <td>
-      <nuxt-link class="underline text-blue-500" :to="`/products/${product.id}`"
-        >#{{ product.code }}</nuxt-link
-      >
+      <img
+        v-lazy-load
+        :src="slide.image"
+        :alt="slide.title || slide.image"
+        class="max-w-xs"
+      />
     </td>
-    <td>{{ product.name }}</td>
-    <td>{{ product.mbrand.name }}</td>
-    <td>{{ product.price | currencyVN }}</td>
-    <td>{{ product.stocks }}</td>
+    <td>{{ slide.title | displayDataNull }}</td>
+    <td>{{ slide.link | displayDataNull }}</td>
     <td>
       <input
         type="checkbox"
-        :checked="product.isActive"
-        @change="onChangeActive(product)"
+        :checked="slide.active"
+        @change="onChangeActive(slide)"
       />
     </td>
-    <td>{{ product.entryDate | dateTime }}</td>
-    <td>{{ product.updateDate | dateTime }}</td>
+    <td>{{ slide.entryDate | dateTime }}</td>
+    <td>{{ slide.updateDate | dateTime }}</td>
     <td>
       <div class="flex items-center">
-        <span @click="$emit('edit', product.id)">
+        <span @click="$emit('edit', slide)">
           <outline-pencil-icon
             class="h-4 w-4 text-blue-500 cursor-pointer mr-4"
           />
         </span>
-        <span @click="$emit('delete', product)">
+        <span @click="$emit('delete', slide)">
           <outline-trash-icon class="h-4 w-4 text-red-500 cursor-pointer" />
         </span>
       </div>
@@ -37,7 +38,7 @@
 <script>
 export default {
   props: {
-    product: {
+    slide: {
       type: Object,
       default: () => {
         return {}
@@ -49,8 +50,8 @@ export default {
     },
   },
   methods: {
-    onChangeActive(product) {
-      this.$emit('changeActive', product)
+    onChangeActive(rating) {
+      this.$emit('changeActive', rating)
     },
   },
 }

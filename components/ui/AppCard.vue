@@ -1,16 +1,22 @@
 <template>
   <div class="bg-white rounded-sm p-4">
-    <div class="flex items-center justify-between mb-4">
+    <div v-if="showCardHeader" class="flex items-center justify-between mb-4">
       <div class="flex items-center">
-        <app-input-search class="mr-2" @onSearch="onSearch" />
-        <app-icon-button
-          icon="outline-refresh-icon"
-          class="ml-2"
-          :disabled="disabledRefresh"
-          @click="onRefresh"
+        <app-input-search
+          v-if="hasSearchBox"
+          class="mr-4"
+          @onSearch="onSearch"
         />
+        <app-button
+          v-if="hasRefreshBtn"
+          icon="outline-refresh-icon"
+          @click="onRefresh"
+        >
+          Tải lại
+        </app-button>
       </div>
       <app-button
+        v-if="hasAddBtn"
         color="primary"
         icon="outline-plus-circle-icon"
         @click="onClick"
@@ -24,9 +30,23 @@
 
 <script>
 export default {
+  props: {
+    hasSearchBox: {
+      type: Boolean,
+      default: true,
+    },
+    hasRefreshBtn: {
+      type: Boolean,
+      default: true,
+    },
+    hasAddBtn: {
+      type: Boolean,
+      default: true,
+    },
+  },
   computed: {
-    disabledRefresh() {
-      return Object.keys(this.$route.query).length === 0
+    showCardHeader() {
+      return this.hasSearchBox || this.hasRefreshBtn || this.hasAddBtn
     },
   },
   methods: {

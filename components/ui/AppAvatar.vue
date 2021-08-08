@@ -1,9 +1,9 @@
 <template>
   <div>
     <img
-      v-if="src"
+      v-if="srcImg"
       class="h-10 w-10 rounded-full"
-      :src="src"
+      :src="srcImg"
       :alt="alt"
       v-bind="$attrs"
     />
@@ -14,10 +14,9 @@
 <script>
 export default {
   props: {
-    src: {
+    srcImg: {
       type: String,
-      required: false,
-      default: 'https://randomuser.me/api/portraits/men/81.jpg',
+      default: '',
     },
     alt: {
       type: String,

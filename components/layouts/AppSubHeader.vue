@@ -1,5 +1,5 @@
 <template>
-  <header class="h-10 flex items-center justify-between mb-4">
+  <header v-if="routeName" class="h-10 flex items-center justify-between mb-4">
     <div
       class="
         capitalize
@@ -16,10 +16,11 @@
 </template>
 
 <script>
+import { menus } from '~/helpers/constants'
 export default {
   computed: {
     routeName() {
-      return this.$route.name === 'index' ? 'Dashboard' : this.$route.name
+      return menus.filter((m) => this.$route.name.includes(m.name))[0]?.text
     },
   },
 }

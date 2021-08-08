@@ -34,7 +34,6 @@ export const actions = {
     dispatch(FETCH_BRANDS)
     dispatch(FETCH_SIZES)
     dispatch(FETCH_ORDER_STATUSES)
-    dispatch('category/FETCH_CATEGORIES')
   },
   async FETCH_BRANDS({ commit }) {
     const { data, status } = await this.$axios.get('/brands')

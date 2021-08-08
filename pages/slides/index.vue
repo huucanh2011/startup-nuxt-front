@@ -1,24 +1,22 @@
 <template>
-  <app-card @onSearch="onSearch" @openModal="dialog = true">
-    <user-list
-      :users="users"
+  <app-card
+    :has-search-box="false"
+    :has-refresh-btn="false"
+    @onSearch="onSearch"
+    @openModal="dialog = true"
+  >
+    <slide-list
+      :slides="slides"
       :loading="loading"
+      @changeActive="changeActive"
       @edit="editItem"
       @delete="deleteItem"
     />
-    <app-pagination
-      :meta="meta"
-      @onChangePage="onChangePage"
-      @onChangeLimit="onChangeLimit"
-    />
-
     <app-confirm :show="dialogDelete" @close="closeDelete" @ok="confirmOk" />
-
-    <user-modal
+    <slide-modal
       :show="dialog"
       :title="formTitle"
-      :user="editedItem"
-      :is-edit="editedIndex"
+      :slide="editedItem"
       @submit="onSubmit"
       @close="close"
     />
@@ -27,45 +25,35 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import UserList from '~/components/user/UserList.vue'
-import UserModal from '~/components/user/UserModal.vue'
+import SlideList from '~/components/slide/SlideList.vue'
+import SlideModal from '~/components/slide/SlideModal.vue'
 import { message } from '~/helpers/constants'
 export default {
-  components: { UserList, UserModal },
+  components: { SlideList, SlideModal },
   data() {
     return {
       dialog: false,
       dialogDelete: false,
       editedIndex: -1,
       editedItem: {
-        name: '',
-        email: '',
-        password: '',
-        avatarPath: '',
-        address: '',
-        phoneNumber: '',
-        deliveryAddress: '',
-        role: 'USER',
+        title: '',
+        image: '',
+        link: '',
       },
       defaultItem: {
-        name: '',
-        email: '',
-        password: '',
-        avatarPath: '',
-        address: '',
-        phoneNumber: '',
-        deliveryAddress: '',
-        role: 'USER',
+        title: '',
+        image: '',
+        link: '',
       },
     }
   },
   head() {
     return {
-      title: 'Tài khoản',
+      title: 'Slides',
     }
   },
   computed: {
-    ...mapState('user', ['users', 'meta']),
+    ...mapState('slide', ['slides']),
     loading() {
       return this.$store.state.loading
     },
@@ -73,30 +61,24 @@ export default {
       return this.editedIndex === -1 ? 'Thêm mới' : 'Cập nhật'
     },
   },
-  watchQuery: ['q', 'page', 'imit'],
   created() {
-    this.FETCH_USERS()
+    this.FETCH_SLIDES()
   },
   methods: {
-    ...mapActions('user', [
-      'FETCH_USERS',
-      'CREATE_USER',
-      'UPDATE_USER',
-      'DELETE_USER',
+    ...mapActions('slide', [
+      'FETCH_SLIDES',
+      'CREATE_SLIDE',
+      'UPDATE_SLIDE',
+      'UPDATE_STATUS_SLIDE',
+      'DELETE_SLIDE',
     ]),
     onSearch(q) {
-      q && this.$router.push({ query: { q } })
+      // q && this.$router.push({ query: { q } })
+      this.$toast.info('Cái này không có search nhé.')
     },
-    onChangePage(page) {
-      this.$router.push({ query: { ...this.$route.query, page } })
-    },
-    onChangeLimit(limit) {
-      this.$route.query.page = 1
-      this.$router.push({ query: { ...this.$route.query, limit } })
-    },
-    deleteItem(user) {
-      this.editedIndex = this.users.indexOf(user)
-      this.editedItem = user
+    deleteItem(slide) {
+      this.editedIndex = this.slides.indexOf(slide)
+      this.editedItem = slide
       this.dialogDelete = true
     },
     closeDelete() {
@@ -107,7 +89,7 @@ export default {
       })
     },
     confirmOk() {
-      this.DELETE_USER(this.editedItem.id)
+      this.DELETE_SLIDE(this.editedItem.id)
       this.$toast.success(message.deleted)
       this.closeDelete()
     },
@@ -119,18 +101,23 @@ export default {
         this.$nuxt.$emit('reset-form')
       })
     },
-    editItem(user) {
-      this.editedIndex = this.users.indexOf(user)
-      this.editedItem = user
+    editItem(slide) {
+      this.editedIndex = this.slides.indexOf(slide)
+      this.editedItem = slide
       this.dialog = true
     },
-    async onSubmit(user) {
+    async changeActive(slide) {
+      const { id, active } = slide
+      await this.UPDATE_STATUS_SLIDE({ id, isActive: !active })
+      this.$toast.success(message.updated)
+    },
+    async onSubmit(slide) {
       try {
         if (this.editedIndex === -1) {
-          await this.CREATE_USER(user)
+          await this.CREATE_SLIDE(slide)
           this.$toast.success(message.created)
         } else {
-          await this.UPDATE_USER(user)
+          await this.UPDATE_SLIDE(slide)
           this.$toast.success(message.updated)
         }
         this.close()

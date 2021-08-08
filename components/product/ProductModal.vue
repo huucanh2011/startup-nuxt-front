@@ -173,6 +173,7 @@ export default {
   },
   created() {
     this.$nuxt.$on('reset-form', () => this.resetForm())
+    this.$store.dispatch('category/FETCH_CATEGORIES', true)
   },
   beforeDestroy() {
     this.$nuxt.$off('reset-form')
@@ -191,6 +192,7 @@ export default {
       this.$refs.form && this.$refs.form.reset()
     },
     onClose() {
+      this.resetForm()
       this.$emit('close')
     },
   },

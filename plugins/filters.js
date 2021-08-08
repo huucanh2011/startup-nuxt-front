@@ -18,10 +18,15 @@ const displayDataNull = (val) => {
   return val
 }
 
+const thousandsFormat = (val) => {
+  return val.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1,')
+}
+
 const currencyVNFormat = (val) => {
-  return `${val.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1,')} đ`
+  return `${thousandsFormat(val)} đ`
 }
 
 Vue.filter('dateTime', dateTime)
 Vue.filter('displayDataNull', displayDataNull)
+Vue.filter('thousands', thousandsFormat)
 Vue.filter('currencyVN', currencyVNFormat)

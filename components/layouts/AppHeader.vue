@@ -22,7 +22,7 @@
         <div ref="dropdown" class="relative">
           <div class="flex items-center cursor-pointer rounded" @click="toggle">
             <span class="mr-1"> {{ $auth.user.name }} </span>
-            <outline-user-circle-icon class="h-6 w-6" />
+            <app-avatar :src-img="$auth.user.avatarPath" />
           </div>
           <div
             v-show="isShow"
